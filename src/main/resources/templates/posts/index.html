@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:font-weight="http://www.w3.org/1999/xhtml">
 <head th:replace="partials :: head(title = 'All Posts Page')">
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -9,6 +9,15 @@
     <title>Document</title>
 </head>
 <body>
+
+<div class="container">
+    <h2>Recent Blog Post</h2>
+    <br>
+    <ul>
+        <div th:each="post : ${posts}">
+            <li><a th:href="@{'/posts/'+${post.id}}><h3 style="font-weight: bold" th:text
+    </ul>
+</div>
 <h1>Index Page</h1>
 
 </body>

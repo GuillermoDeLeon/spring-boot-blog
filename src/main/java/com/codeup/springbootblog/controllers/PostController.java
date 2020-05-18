@@ -2,48 +2,50 @@ package com.codeup.springbootblog.controllers;
 
 import com.codeup.springbootblog.models.Post;
 import com.codeup.springbootblog.repositories.PostRepository;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 public class PostController {
 
-    private final PostRepository postDao;
+//    private final PostRepository postDao;
+    private UserRepository userDao;
+    private PostRepository postDao;
 
-    public PostController(PostRepository postDao) {
+    public PostController(UserRepository userDao, PostRepository postDao) {
+        this.userDao = userDao;
         this.postDao = postDao;
     }
 
-
     @GetMapping("/posts")
-    public String viewIndexPage(Model view) {
-        List<Post> posts = postDao.findAll();
-        view.addAttribute("posts", posts);
+    public String showPostsIndexPage(Model model) {
+        model.addAttribute("posts", postDao.findAll());
         return "posts/index";
     }
 
     @GetMapping("/posts/{id}")
-    @ResponseBody
-    public String postsId(@PathVariable String id) {
-        return "view an individual post " + id;
+    public String showAnIndividualPost(@PathVariable long id, Model model) {
+        Post thisPost = postDao.getOne(id);
+        model.addAttribute("post", thisPost);
+            return "posts/show";
     }
 
     @GetMapping("/posts/create")
-    @ResponseBody
-    public String postsCreate() {
-        return "view the form for creating a post";
+    public String createPost() {
+        return "posts/create;
     }
 
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String submitCreatePosts() {
-        return "create a new post";
+    public String submitCreatePosts(@RequestParam String title, @RequestParam String body) {
+        User author = userDao.getOne(1L);
+        Post newPost = new Post();
+        newPost.setTitle(title);
+        newPost.setBody(body);
+        return "redirect:/posts";
     }
 }
 

@@ -1,8 +1,9 @@
 package com.codeup.springbootblog.controllers;
 
-import com.codeup.springbootblog.models.Post;
+import com.codeup.springbootblog.models.*;
 import com.codeup.springbootblog.repositories.PostRepository;
-import org.apache.catalina.User;
+import com.codeup.springbootblog.repositories.UserRepository;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,10 +35,10 @@ public class PostController {
             return "posts/show";
     }
 
-    @GetMapping("/posts/create")
-    public String createPost() {
-        return "posts/create;
-    }
+//    @GetMapping("/posts/create")
+//    public String createPost() {
+//        return "posts/create;
+//    }
 
     @PostMapping("/posts/create")
     public String submitCreatePosts(@RequestParam String title, @RequestParam String body) {
@@ -45,7 +46,15 @@ public class PostController {
         Post newPost = new Post();
         newPost.setTitle(title);
         newPost.setBody(body);
+
+        newPost.setUser(author);
+        postDao.save(newPost);
         return "redirect:/posts";
+    }
+
+    @GetMapping("/posts/test")
+    public String goToTestPage() {
+        return "posts/test";
     }
 }
 

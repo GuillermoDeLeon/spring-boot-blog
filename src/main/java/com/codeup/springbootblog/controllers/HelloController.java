@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class HelloController {
 
-    @PostMapping("/upload")
-    public void upload() {
+//    @PostMapping("/upload")
+//    public void upload() {
+//
+//    }
 
-    }
-
-    @PostMapping("/upload/profile")
-    public void uploadProfile() {
-
-    }
+//    @PostMapping("/upload/profile")
+//    public void uploadProfile() {
+//
+//    }
 
     @GetMapping("/hi/{name}")
     @ResponseBody
@@ -25,7 +25,7 @@ public class HelloController {
 
     @GetMapping("/defined-ad/{id}/{version}")
     @ResponseBody
-    public String showAd(@PathVariable in version, @PathVariable long id) {
+    public String showAd(@PathVariable int version, @PathVariable long id) {
         return "showing details for ad with id: " + id + ". Version: " + version;
     }
 
@@ -48,12 +48,12 @@ public class HelloController {
 
     @PostMapping("/join")
     public String joinCohort(@RequestParam(name = "cohort") String cohort, Model model) {
-        model.addAttribute("cohort", "Welcom to " + cohort + "!");
+        model.addAttribute("cohort", "Welcome to " + cohort + "!");
         return "join";
     }
 
     @GetMapping("/welcome")
-    pubic String showWelcome() {
+    public String showWelcome() {
         return "welcome";
     }
 }

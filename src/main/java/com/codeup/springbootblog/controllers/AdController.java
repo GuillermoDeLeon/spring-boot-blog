@@ -1,6 +1,9 @@
 package com.codeup.springbootblog.controllers;
 
-import org.apache.catalina.User;
+import com.codeup.springbootblog.models.*;
+import com.codeup.springbootblog.repositories.AdRepository;
+import com.codeup.springbootblog.repositories.UserRepository;
+//import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +17,7 @@ public class AdController {
     private UserRepository userDao;
     private AdRepository adDao;
 
-    public adController(UserRepository userDao, AdRepository adDao) {
+    public AdController(UserRepository userDao, AdRepository adDao) {
         this.userDao = userDao;
         this.adDao = adDao;
     }
@@ -46,7 +49,7 @@ public class AdController {
         Ad ad = new Ad();
         User user = userDao.getOne(1L);
         ad.setUser(user);
-        model.addAttribute("ad" ad);
+        model.addAttribute("ad", ad);
         return "ads/create";
     }
 
